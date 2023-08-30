@@ -1,0 +1,144 @@
+.lodgingparent {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  height: 100%;
+}
+.underbackgroundcontent {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+.infocontainer {
+  width: 45%;
+  margin-left: 5%;
+}
+.hostcontainer {
+  padding-top: 1%;
+  position: relative;
+  width: 45%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.tagscontainer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.appartementtitle {
+  color: #ff6060;
+  font-family: Montserrat;
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 500;
+}
+.location {
+  color: #ff6060;
+  font-family: Montserrat;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+}
+
+.red {
+  color: #ff6060;
+}
+
+.hostname {
+  position: absolute;
+  right: 14%;
+  color: #ff6060;
+  text-align: right;
+  font-family: Montserrat;
+  font-size: 19px;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.hostpicture {
+  width: 10%;
+  right: 1%;
+  position: absolute;
+  border-radius: 70px;
+}
+
+.collapselodging {
+  margin: 0;
+  width: 60%;
+}
+
+.collapseslodgingparent {
+  margin-top: 25px;
+  display: flex;
+  flex-direction: row;
+}
+
+.collapselodgingchild {
+  margin-left: 10%;
+  width: 80%;
+}
+
+.red {
+  color: #ff6060;
+}
+.stars {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  top: 80%;
+  right: 1%;
+  z-index: 2;
+  color: #ff6060;
+}
+.starmargin {
+  margin: 7px;
+}
+.equipment {
+  display: flex;
+  flex-direction: column;
+}
+
+@media screen and (max-width: 600px) {
+  .underbackgroundcontent {
+    flex-direction: column;
+  }
+  .infocontainer {
+    width: 90%;
+  }
+  .hostcontainer {
+    width: 90%;
+    height: 50px;
+  }
+  .hostpicture {
+    width: 12%;
+    top: 20%;
+  }
+  .hostname {
+    width: 50px;
+    top: -15%;
+    right: 29%;
+  }
+  .stars {
+    left: 5%;
+    top: 30%;
+    width: 45%;
+  }
+  .appartementtitle {
+    font-size: 18px;
+  }
+  .collapselodgingchild {
+    margin-left: 5%;
+    width: 90%;
+    padding-left: 2%;
+  }
+
+  .collapselodging {
+    width: 95%;
+    margin: 0;
+  }
+  .collapseslodgingparent {
+    flex-direction: column;
+  }
+}

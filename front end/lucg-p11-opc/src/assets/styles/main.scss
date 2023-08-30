@@ -1,0 +1,24 @@
+//@import 'abstracts/';
+
+//@import "components/
+
+//@import "layout/
+
+//@import "pages/
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+html {
+  height: fit-content;
+}
+//@import 'vendors/';
