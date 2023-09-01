@@ -1,22 +1,23 @@
 import argenBanklogo from "../assets/img/argentBankLogo.png";
+import { NavLink } from "react-router-dom";
 
 function Navbar() {
   return (
     <div>
       <nav className="main-nav">
-        <a className="main-nav-logo" href="#">
+        <NavLink className="main-nav-logo" to="/">
           <img
             className="main-nav-logo-image"
             src={argenBanklogo}
             alt="Argent Bank Logo"
           />
           <h1 className="sr-only">Argent Bank</h1>
-        </a>
+        </NavLink>
         <div>
-          <a className="main-nav-item" href="./sign-in.html">
+          <NavLink className="main-nav-item" to="/signin">
             <i className="fa fa-user-circle"></i>
             Sign In
-          </a>
+          </NavLink>
         </div>
       </nav>
     </div>
