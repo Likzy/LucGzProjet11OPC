@@ -1,30 +1,32 @@
-import logo from "../../logo.svg";
 import "../../App.css";
 import Navbar from "../../components/navbar";
 import Footer from "../../components/footer";
+import "../../assets/scripts/login";
 
 function Signin() {
   return (
     <div className="App">
       <Navbar />
-      <main class="main bg-dark">
-        <section class="sign-in-content">
-          <i class="fa fa-user-circle sign-in-icon"></i>
+      <main className="main bg-dark">
+        <section className="sign-in-content">
+          <i className="fa fa-user-circle sign-in-icon"></i>
           <h1>Sign In</h1>
-          <form>
-            <div class="input-wrapper">
-              <label for="username">Username</label>
-              <input type="text" id="username" />
+          <form id="login-form">
+            <div className="input-wrapper">
+              <label htmlFor="email">Email</label>
+              <input type="text" id="email" name="email" required />
             </div>
-            <div class="input-wrapper">
-              <label for="password">Password</label>
-              <input type="password" id="password" />
+            <div className="input-wrapper">
+              <label htmlFor="password">Password</label>
+              <input type="password" id="password" name="password" required />
             </div>
-            <div class="input-remember">
-              <input type="checkbox" id="remember-me" />
-              <label for="remember-me">Remember me</label>
+            <div className="input-remember">
+              <input type="checkbox" id="remember-me" name="rememberMe" />
+              <label htmlFor="remember-me">Remember me</label>
             </div>
-            <button class="sign-in-button">Sign In</button>
+            <button type="submit" className="sign-in-button">
+              Sign In
+            </button>
           </form>
         </section>
       </main>

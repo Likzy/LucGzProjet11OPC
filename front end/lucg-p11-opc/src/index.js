@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Provider } from "react-redux";
-import store from "./store";
+import store from "./store/store.js";
 import "./assets/styles/main.css";
 import "./assets/styles/main.scss";
 import Signin from "./pages/signin/singin-index";
