@@ -29,8 +29,13 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .then((data) => {
           console.log("API Response:", data);
-          store.dispatch(login({ isAuthenticated: true, ...data }));
-          window.location.replace("http://localhost:3000/user");
+          const {
+            body: { firstName, lastName, userName, id },
+          } = data;
+
+          store.dispatch(
+            login({ isAuthenticated: true, firstName, lastName, userName, id })
+          );
         })
         .catch((error) => {
           console.error("API Error:", error);

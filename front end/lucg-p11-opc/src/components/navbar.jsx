@@ -19,9 +19,10 @@ function Navbar() {
             <h1 className="sr-only">Argent Bank</h1>
           </NavLink>
           <div>
-            <NavLink className="main-nav-item" to="/user" />
-            <i className="fa fa-user-circle"></i>
-            {username}
+            <NavLink className="main-nav-item" to="/user">
+              <i className="fa fa-user-circle"></i>
+              {username}
+            </NavLink>
             <button className="main-nav-item" href="./index.html">
               <i className="fa fa-sign-out"></i>
               Sign Out
