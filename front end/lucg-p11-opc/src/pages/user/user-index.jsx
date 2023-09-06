@@ -1,12 +1,37 @@
-import "../../App.css";
-import Footer from "../../components/footer";
-import Navbar from "../../components/navbar";
+import React, { useState, useEffect } from "react";
+import Modal from "react-modal";
 import { useSelector } from "react-redux";
+import Navbar from "../../components/navbar";
+import Footer from "../../components/footer";
 
 function User() {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const firstname = useSelector((state) => state.auth.firstname);
   const lastname = useSelector((state) => state.auth.lastname);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+
+    closeModal();
+  };
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      const editbutton = document.querySelector(".edit-button");
+      editbutton.addEventListener("click", openModal);
+    }
+  }, [isAuthenticated]);
+
   // const id = useSelector((state) => state.auth.id);
   if (isAuthenticated) {
     return (
@@ -54,6 +79,22 @@ function User() {
           </section>
         </main>
         <Footer />
+        <Modal
+          isOpen={isModalOpen}
+          onRequestClose={closeModal}
+          contentLabel="Edit Name Modal"
+          className="modal"
+        >
+          <h2>Edit Name</h2>
+          <form onSubmit={handleFormSubmit}>
+            <div>
+              <label htmlFor="newUsername">New Username:</label>
+              <input type="text" id="newUsername" name="newUsername" />
+            </div>
+            <button type="submit">Save</button>
+          </form>
+          <button onClick={closeModal}>Cancel</button>
+        </Modal>
       </div>
     );
   }
@@ -67,7 +108,6 @@ function User() {
             <br />
             Please loggin to access user
           </h1>
-          <button className="edit-button">Edit Name</button>
         </div>
         <h2 className="sr-only">Accounts</h2>
         <section className="account">

@@ -1,10 +1,31 @@
 import argenBanklogo from "../assets/img/argentBankLogo.png";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import store from "../store/store";
+import { logout } from "../reducer/authSlice";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faRightToBracket,
+  faRightFromBracket,
+} from "@fortawesome/free-solid-svg-icons";
 
 function Navbar() {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const username = useSelector((state) => state.auth.username);
+  useEffect(() => {
+    if (isAuthenticated) {
+      const signout = document.getElementById("signout");
+      signout.addEventListener("click", async (e) => {
+        e.preventDefault();
+        store.dispatch(
+          logout({
+            isAuthenticated: false,
+          })
+        );
+      });
+    }
+  }, [isAuthenticated]);
 
   if (isAuthenticated) {
     return (
@@ -23,10 +44,10 @@ function Navbar() {
               <i className="fa fa-user-circle"></i>
               {username}
             </NavLink>
-            <button className="main-nav-item" href="./index.html">
-              <i className="fa fa-sign-out"></i>
+            <NavLink id="signout" className="main-nav-item" to="/">
+              <FontAwesomeIcon icon={faRightFromBracket} />
               Sign Out
-            </button>
+            </NavLink>
           </div>
         </nav>
       </div>
@@ -46,7 +67,7 @@ function Navbar() {
         </NavLink>
         <div>
           <NavLink className="main-nav-item" to="/signin">
-            <i className="fa fa-user-circle"></i>
+            <FontAwesomeIcon icon={faRightToBracket} />
             Sign In
           </NavLink>
         </div>
