@@ -42,6 +42,7 @@ function Signin() {
               lastName,
               userName,
               id,
+              token,
             })
           );
           Navigate("/user");

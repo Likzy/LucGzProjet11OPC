@@ -3,13 +3,20 @@ import Modal from "react-modal";
 import { useSelector } from "react-redux";
 import Navbar from "../../components/navbar";
 import Footer from "../../components/footer";
+import { useNavigate } from "react-router";
+import store from "../../store/store";
+import { login } from "../../reducer/authSlice";
 
 function User() {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const firstname = useSelector((state) => state.auth.firstname);
   const lastname = useSelector((state) => state.auth.lastname);
+  const token = useSelector((state) => state.auth.token);
+  const Navigate = useNavigate();
+  const newUsernameInput = document.getElementById("newUsername");
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [newUsername, setNewUsername] = useState("");
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -19,10 +26,46 @@ function User() {
     setIsModalOpen(false);
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
+    const apiUrl = "http://localhost:3001/api/v1/user/profile";
+    const submitedname = newUsernameInput.value;
+    const requestOptions = {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        userName: submitedname,
+      }),
+    };
 
-    closeModal();
+    try {
+      const response = await fetch(apiUrl, requestOptions);
+      if (response.ok) {
+        const data = await response.json();
+        const {
+          body: { firstName, lastName, userName, id },
+        } = data;
+
+        store.dispatch(
+          login({
+            isAuthenticated: true,
+            firstName,
+            lastName,
+            userName,
+            id,
+          })
+        );
+        closeModal();
+        Navigate("/user");
+      } else {
+        console.error("Request failed with status:", response.status);
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
   };
 
   useEffect(() => {
@@ -32,7 +75,6 @@ function User() {
     }
   }, [isAuthenticated]);
 
-  // const id = useSelector((state) => state.auth.id);
   if (isAuthenticated) {
     return (
       <div className="App">
@@ -89,7 +131,13 @@ function User() {
           <form onSubmit={handleFormSubmit}>
             <div>
               <label htmlFor="newUsername">New Username:</label>
-              <input type="text" id="newUsername" name="newUsername" />
+              <input
+                type="text"
+                id="newUsername"
+                name="newUsername"
+                value={newUsername}
+                onChange={(e) => setNewUsername(e.target.value)}
+              />
             </div>
             <button type="submit">Save</button>
           </form>
