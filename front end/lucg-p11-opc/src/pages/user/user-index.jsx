@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Modal from "react-modal";
 import { useSelector } from "react-redux";
 import Navbar from "../../components/navbar";
 import Footer from "../../components/footer";
@@ -15,15 +14,16 @@ function User() {
   const Navigate = useNavigate();
   const newUsernameInput = document.getElementById("newUsername");
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [newUsername, setNewUsername] = useState("");
-
-  const openModal = () => {
-    setIsModalOpen(true);
+  const closeEditname = () => {
+    const Editdiv = document.getElementById("editnamediv");
+    Editdiv.classList.add("displaynone");
+    Editdiv.classList.remove("displayeditname");
   };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
+  const openEditname = () => {
+    const Editdiv = document.getElementById("editnamediv");
+    Editdiv.classList.remove("displaynone");
+    Editdiv.classList.add("displayeditname");
   };
 
   const handleFormSubmit = async (e) => {
@@ -58,7 +58,7 @@ function User() {
             id,
           })
         );
-        closeModal();
+        closeEditname();
         Navigate("/user");
       } else {
         console.error("Request failed with status:", response.status);
@@ -71,7 +71,7 @@ function User() {
   useEffect(() => {
     if (isAuthenticated) {
       const editbutton = document.querySelector(".edit-button");
-      editbutton.addEventListener("click", openModal);
+      editbutton.addEventListener("click", openEditname);
     }
   }, [isAuthenticated]);
 
@@ -87,6 +87,32 @@ function User() {
               {firstname} {lastname}!
             </h1>
             <button className="edit-button">Edit Name</button>
+            <div className="Editnamecontainer">
+              <div className="EditnameDiv displaynone" id="editnamediv">
+                <h2 className="black">Edit Name</h2>
+                <form onSubmit={handleFormSubmit}>
+                  <div>
+                    <label className="black" htmlFor="newUsername">
+                      New Username:
+                    </label>
+                    <input
+                      type="text"
+                      id="newUsername"
+                      name="newUsername"
+                      value={newUsername}
+                      onChange={(e) => setNewUsername(e.target.value)}
+                    />
+                  </div>
+
+                  <button className="editnamebutton" type="submit">
+                    Save
+                  </button>
+                </form>
+                <button className="editnamebutton" onClick={closeEditname}>
+                  Cancel
+                </button>
+              </div>
+            </div>
           </div>
           <h2 className="sr-only">Accounts</h2>
           <section className="account">
@@ -121,28 +147,6 @@ function User() {
           </section>
         </main>
         <Footer />
-        <Modal
-          isOpen={isModalOpen}
-          onRequestClose={closeModal}
-          contentLabel="Edit Name Modal"
-          className="modal"
-        >
-          <h2>Edit Name</h2>
-          <form onSubmit={handleFormSubmit}>
-            <div>
-              <label htmlFor="newUsername">New Username:</label>
-              <input
-                type="text"
-                id="newUsername"
-                name="newUsername"
-                value={newUsername}
-                onChange={(e) => setNewUsername(e.target.value)}
-              />
-            </div>
-            <button type="submit">Save</button>
-          </form>
-          <button onClick={closeModal}>Cancel</button>
-        </Modal>
       </div>
     );
   }

@@ -6,6 +6,8 @@ import store from "../../store/store";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useCallback } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
 
 function Signin() {
   const Navigate = useNavigate();
@@ -95,11 +97,11 @@ function Signin() {
     });
   }, [ResolveUsername]);
   return (
-    <div className="App">
+    <div className="App ">
       <Navbar />
-      <main className="main bg-dark">
+      <main className="singinbody main bg-dark">
         <section className="sign-in-content">
-          <i className="fa fa-user-circle sign-in-icon"></i>
+          <FontAwesomeIcon icon={faCircleUser} />
           <h1>Sign In</h1>
           <form id="login-form">
             <div className="input-wrapper">

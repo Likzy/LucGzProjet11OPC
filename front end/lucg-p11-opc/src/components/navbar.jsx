@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faRightToBracket,
   faRightFromBracket,
-  faUser,
+  faCircleUser,
 } from "@fortawesome/free-solid-svg-icons";
 
 function Navbar() {
@@ -42,7 +42,7 @@ function Navbar() {
           </NavLink>
           <div>
             <NavLink className="main-nav-item" to="/user">
-              <FontAwesomeIcon icon={faUser} />
+              <FontAwesomeIcon icon={faCircleUser} />
               {username}
             </NavLink>
             <NavLink id="signout" className="main-nav-item" to="/">
