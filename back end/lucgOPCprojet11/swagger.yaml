@@ -101,6 +101,147 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
+
+   /api/user/{userId}/accounts:
+    get:
+      summary: Recupere les comptes de l'utilisateur
+      description: Renvoie les comptes du user.
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: integer
+          description: L'identifiant de l'utilisateur.
+      responses:
+        '200':
+          description: Réponse réussie
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accounts:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        accountNumber:
+                          type: string
+                          description: Le numéro de compte bancaire.
+                        balance:
+                          type: number
+                          format: double
+                          description: Le solde du compte bancaire.
+        '404':
+          description: Utilisateur non trouvé
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Message d'erreur indiquant que l'utilisateur n'a pas été trouvé.
+   /api/user/{userId}/account/payments:
+    get:
+      summary: Afficher la liste des prélèvements de l'utilisateur
+      description: Renvoie la liste des prélèvements créés par l'utilisateur {userId} lié à l'account {accountId}.
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: integer
+          description: L'identifiant de l'utilisateur.
+        - in: query
+          name: accountId
+          required: true
+          schema:
+            type: integer
+          description: L'identifiant du compte bancaire lié aux prélèvements.
+      responses:
+        '200':
+          description: Réponse réussie
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    paymentId:
+                      type: integer
+                      description: L'identifiant du prélèvement.
+                    amount:
+                      type: number
+                      format: double
+                      description: Le montant du prélèvement.
+                    description:
+                      type: string
+                      description: Description du prélèvement.
+        '404':
+          description: Utilisateur ou compte non trouvé
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Message d'erreur indiquant que l'utilisateur ou le compte n'a pas été trouvé.
+  /api/user/{userId}/account/payments/{paymentId}:
+    put:
+      summary: Modifier le détail d'un prélèvement
+      description: Permet à l'utilisateur identifié par {userId} de modifier le détail (catégorie et note) au format texte d'un prélèvement spécifique identifié par {paymentId}. Les détails mis à jour sont fournis dans le corps de la requête.
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: integer
+          description: L'identifiant de l'utilisateur.
+        - in: path
+          name: paymentId
+          required: true
+          schema:
+            type: integer
+          description: L'identifiant du prélèvement à modifier.
+      requestBody:
+        description: Nouveaux détails du prélèvement
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                category:
+                  type: string
+                  description: La nouvelle catégorie du prélèvement.
+                note:
+                  type: string
+                  description: La nouvelle note du prélèvement.
+      responses:
+        '200':
+          description: Réponse réussie
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Message de confirmation de la modification.
+        '404':
+          description: Prélèvement ou utilisateur non trouvé
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Message d'erreur indiquant que le prélèvement ou l'utilisateur n'a pas été trouvé.
 securityDefinitions:
   Bearer:
     type: apiKey
