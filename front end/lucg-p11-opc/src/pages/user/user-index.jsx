@@ -7,6 +7,7 @@ import store from "../../store/store";
 import { login } from "../../reducer/authSlice";
 
 function User() {
+ 
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const firstname = useSelector((state) => state.auth.firstname);
   const lastname = useSelector((state) => state.auth.lastname);
@@ -48,7 +49,6 @@ function User() {
         const {
           body: { firstName, lastName, userName, id },
         } = data;
-
         store.dispatch(
           login({
             isAuthenticated: true,
@@ -56,6 +56,7 @@ function User() {
             lastName,
             userName,
             id,
+            token,
           })
         );
         closeEditname();

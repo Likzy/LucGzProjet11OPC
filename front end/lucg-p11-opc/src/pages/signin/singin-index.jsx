@@ -10,9 +10,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
 
 function Signin() {
+   
+    
+  
   const Navigate = useNavigate();
   const ResolveUsername = useCallback(
     async (token) => {
+      
       const apiUrl = "http://localhost:3001/api/v1/user/profile";
       const requestOptions = {
         method: "POST",
