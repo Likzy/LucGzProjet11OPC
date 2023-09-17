@@ -7,7 +7,6 @@ import store from "../../store/store";
 import { login } from "../../reducer/authSlice";
 
 function User() {
- 
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const firstname = useSelector((state) => state.auth.firstname);
   const lastname = useSelector((state) => state.auth.lastname);
@@ -104,14 +103,15 @@ function User() {
                       onChange={(e) => setNewUsername(e.target.value)}
                     />
                   </div>
-
+                </form>
+                <div className="editnamebuttoncontainer">
                   <button className="editnamebutton" type="submit">
                     Save
                   </button>
-                </form>
-                <button className="editnamebutton" onClick={closeEditname}>
-                  Cancel
-                </button>
+                  <button className="editnamebutton" onClick={closeEditname}>
+                    Cancel
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -154,7 +154,7 @@ function User() {
   return (
     <div className="App">
       <Navbar />
-      <main className="main bg-dark">
+      <main className="main bg-dark vh80 paddingtop20px">
         <div className="header">
           <h1>
             You are not logged in
