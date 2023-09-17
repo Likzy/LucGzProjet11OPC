@@ -138,8 +138,19 @@ paths:
                           type: number
                           format: double
                           description: Le solde du compte bancaire.
+          schema:
+            $ref: "#/definitions/AccountsResponse"
+          examples:
+            application/json:
+              Accounts:
+                - AccountName: "Account 1"
+                  AccountId: "12345"
+                - AccountName: "Account 2"
+                  AccountId: "67890"
+                - AccountName: "Account 3"
+                  AccountId: "54321"
         "404":
-          description: Utilisateur non trouvé
+          description: Utilisateur ou compte(s) associé(s) non trouvé(s)
           content:
             application/json:
               schema:
@@ -191,6 +202,17 @@ paths:
                     description:
                       type: string
                       description: Description du prélèvement.
+          schema:
+            $ref: "#/definitions/PaymentsResponse"
+          examples:
+            application/json:
+              Payments:
+                - PaymentId: "896544112552"
+                  PaymentValue: "65"
+                - PaymentId: "8965488639952"
+                  AccountId: "-50"
+                - PaymentId: "89654744752"
+                  AccountId: "1000"
         "404":
           description: Utilisateur ou compte non trouvé
           content:
@@ -237,6 +259,7 @@ paths:
             application/json:
           schema:
             $ref: "#/components/schemas/ChangeDetailsBody"
+
       responses:
         "200":
           description: Réponse réussie
@@ -258,6 +281,7 @@ paths:
                   message:
                     type: string
                     description: Message d'erreur indiquant que le prélèvement ou l'utilisateur n'a pas été trouvé.
+
 components:
   schemas:
     ChangeDetailsBody:
@@ -314,6 +338,30 @@ definitions:
             type: string
           email:
             type: string
+  AccountsResponse:
+  type: object
+  properties:
+    Accounts:
+      type: array
+      items:
+        type: object
+        properties:
+          AccountName:
+            type: string
+          AccountId:
+            type: string
+  PaymentsResponse:
+  type: object
+  properties:
+    Payments:
+      type: array
+      items:
+        type: object
+        properties:
+          PaymentId:
+            type: string
+          PaymentValue:
+            type: integer
   LoginResponse:
     type: object
     properties:
