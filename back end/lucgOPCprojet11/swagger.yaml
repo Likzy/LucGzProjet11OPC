@@ -101,9 +101,9 @@ paths:
           description: Invalid Fields
         "500":
           description: Internal Server Error
-  /api/user/{userId}/accounts:
+  /user/{userId}/accounts:
     get:
-      summary: Recupere les comptes de l'utilisateur
+      summary: Recupere les comptes de l'utilisateur ainsi que leur balances et different payements
       description: Renvoie les comptes du user.
       parameters:
         - in: path
@@ -120,24 +120,7 @@ paths:
           description: Le token d'authentification de l'utilisateur.
       responses:
         "200":
-          description: Réponse réussie
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  accounts:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        accountNumber:
-                          type: string
-                          description: Le numéro de compte bancaire.
-                        balance:
-                          type: number
-                          format: double
-                          description: Le solde du compte bancaire.
+          
           schema:
             $ref: "#/definitions/AccountsResponse"
           examples:
@@ -145,10 +128,29 @@ paths:
               Accounts:
                 - AccountName: "Account 1"
                   AccountId: "12345"
+                  Balance: "1256.00"
                 - AccountName: "Account 2"
                   AccountId: "67890"
+                  Balance: "1896.67"
                 - AccountName: "Account 3"
                   AccountId: "54321"
+                  Balance: "2596.47"
+              Payments:
+                - AccountId: "12345"
+                  PaymentId: "896544112552"
+                  PaymentValue: "65"
+                  PaymentCategory: "Food"
+                  PaymentNote: "Restaurant with bob"
+                - AccountId: "12345"
+                  PaymentId: "8965488639952"
+                  PaymentValue: "-50"
+                  PaymentCategory: "Rent"
+                  PaymentNote: ""
+                - AccountId: "67890"
+                  PaymentId: "89654744752"
+                  PaymentValue: "1000"
+                  PaymentCategory: "Energy"
+                  PaymentNote: "Payed for the whole year"
         "404":
           description: Utilisateur ou compte(s) associé(s) non trouvé(s)
           content:
@@ -159,71 +161,7 @@ paths:
                   message:
                     type: string
                     description: Message d'erreur indiquant que l'utilisateur n'a pas été trouvé.
-  /api/user/{userId}/{accountid}/payments:
-    get:
-      summary: Afficher la liste des prélèvements de l'utilisateur
-      description: Renvoie la liste des prélèvements créés par l'utilisateur {userId} lié à l'account {accountId}.
-      parameters:
-        - in: path
-          name: userId
-          required: true
-          schema:
-            type: integer
-          description: L'identifiant de l'utilisateur.
-        - in: path
-          name: accountId
-          required: true
-          schema:
-            type: integer
-          description: L'identifiant du compte.
-        - in: header
-          name: token
-          required: true
-          schema:
-            type: string
-          description: Le token d'authentification de l'utilisateur.
-      responses:
-        "200":
-          description: Réponse réussie
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    paymentId:
-                      type: integer
-                      description: L'identifiant du prélèvement.
-                    amount:
-                      type: number
-                      format: double
-                      description: Le montant du prélèvement.
-                    description:
-                      type: string
-                      description: Description du prélèvement.
-          schema:
-            $ref: "#/definitions/PaymentsResponse"
-          examples:
-            application/json:
-              Payments:
-                - PaymentId: "896544112552"
-                  PaymentValue: "65"
-                - PaymentId: "8965488639952"
-                  AccountId: "-50"
-                - PaymentId: "89654744752"
-                  AccountId: "1000"
-        "404":
-          description: Utilisateur ou compte non trouvé
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    description: Message d'erreur indiquant que l'utilisateur ou le compte n'a pas été trouvé.
-  /api/user/{userId}/{accountId}/payments/{paymentId}:
+  /user/{userId}/{accountId}/payments/{paymentId}:
     put:
       summary: Modifier le détail d'un prélèvement
       description: Permet à l'utilisateur identifié par {userId} de modifier le détail (catégorie et note) au format texte d'un prélèvement spécifique identifié par {paymentId}. Les détails mis à jour sont fournis dans le corps de la requête.
@@ -272,7 +210,7 @@ paths:
                     type: string
                     description: Message de confirmation de la modification.
         "404":
-          description: Prélèvement ou utilisateur non trouvé
+          description: Prélèvement trouvé
           content:
             application/json:
               schema:
@@ -280,7 +218,7 @@ paths:
                 properties:
                   message:
                     type: string
-                    description: Message d'erreur indiquant que le prélèvement ou l'utilisateur n'a pas été trouvé.
+                    description: Message d'erreur indiquant que le prélèvement n'a pas été trouvé.
 
 components:
   schemas:
@@ -350,6 +288,21 @@ definitions:
             type: string
           AccountId:
             type: string
+          Balance:
+            type: float
+          Payments:
+            type: array
+            items:
+              type: object
+              properties:
+                PaymentId:
+                  type: string
+                PaymentValue:
+                type: integer
+                PaymentCategory:
+                  type: string
+                PaymentNote:
+                  type: string
   PaymentsResponse:
   type: object
   properties:
