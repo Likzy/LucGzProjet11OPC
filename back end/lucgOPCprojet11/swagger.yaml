@@ -103,6 +103,8 @@ paths:
           description: Internal Server Error
   /user/{userId}/accounts:
     get:
+      tags:
+          - Accounts and payments
       summary: Recupere les comptes de l'utilisateur ainsi que leur balances et different payements
       description: Renvoie les comptes du user.
       parameters:
@@ -163,6 +165,8 @@ paths:
                     description: Message d'erreur indiquant que l'utilisateur n'a pas été trouvé.
   /user/{userId}/{accountId}/payments/{paymentId}:
     put:
+      tags:
+          - Accounts and payments
       summary: Modifier le détail d'un prélèvement
       description: Permet à l'utilisateur identifié par {userId} de modifier le détail (catégorie et note) au format texte d'un prélèvement spécifique identifié par {paymentId}. Les détails mis à jour sont fournis dans le corps de la requête.
       parameters:

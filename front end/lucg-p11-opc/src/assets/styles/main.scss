@@ -51,6 +51,8 @@ body {
 }
 .main {
   flex: 1;
+  padding-bottom: 5px;
+  padding-top: 5px;
 }
 .bg-dark {
   background-color: $background-color_1;

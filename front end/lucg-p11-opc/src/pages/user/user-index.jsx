@@ -5,6 +5,7 @@ import Footer from "../../components/footer";
 import { useNavigate } from "react-router";
 import store from "../../store/store";
 import { login } from "../../reducer/authSlice";
+import Account from "../../components/account";
 
 function User() {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -116,36 +117,9 @@ function User() {
             </div>
           </div>
           <h2 className="sr-only">Accounts</h2>
-          <section className="account">
-            <div className="account-content-wrapper">
-              <h3 className="account-title">Argent Bank Checking (x8349)</h3>
-              <p className="account-amount">$2,082.79</p>
-              <p className="account-amount-description">Available Balance</p>
-            </div>
-            <div className="account-content-wrapper cta">
-              <button className="transaction-button">View transactions</button>
-            </div>
-          </section>
-          <section className="account">
-            <div className="account-content-wrapper">
-              <h3 className="account-title">Argent Bank Savings (x6712)</h3>
-              <p className="account-amount">$10,928.42</p>
-              <p className="account-amount-description">Available Balance</p>
-            </div>
-            <div className="account-content-wrapper cta">
-              <button className="transaction-button">View transactions</button>
-            </div>
-          </section>
-          <section className="account">
-            <div className="account-content-wrapper">
-              <h3 className="account-title">Argent Bank Credit Card (x8349)</h3>
-              <p className="account-amount">$184.30</p>
-              <p className="account-amount-description">Current Balance</p>
-            </div>
-            <div className="account-content-wrapper cta">
-              <button className="transaction-button">View transactions</button>
-            </div>
-          </section>
+          <Account AccountId={"(x8349)"} Balance={"$2,082.79"} />
+          <Account AccountId={"(x6712)"} Balance={"$10,928.42"} />
+          <Account AccountId={"(x8379)"} Balance={"$184.30"} />
         </main>
         <Footer />
       </div>
@@ -159,7 +133,9 @@ function User() {
           <h1>
             You are not logged in
             <br />
-            Please loggin to access user
+            Please loggin to gain access to your account
+            <br />
+            This page is an example
           </h1>
         </div>
         <h2 className="sr-only">Accounts</h2>
