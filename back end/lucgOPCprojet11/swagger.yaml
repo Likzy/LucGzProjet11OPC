@@ -261,6 +261,7 @@ paths:
           description: Le token d'authentification de l'utilisateur.
         - in: query
           name: month
+          required: true
           schema:
             type: string
           description: The month for which to retrieve payment details.
