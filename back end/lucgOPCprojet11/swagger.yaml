@@ -204,6 +204,17 @@ paths:
 
       responses:
         "200":
+          schema:
+            $ref: "#/definitions/PaymentResponse"
+          examples:
+            application/json:
+              Payments:
+                - AccountId: "12345"
+                  PaymentId: "896544112552"
+                  PaymentValue: "65"
+                  PaymentCategory: "Example Category"
+                  PaymentNote: "Example Note"
+                
           description: Réponse réussie
           content:
             application/json:
@@ -214,7 +225,7 @@ paths:
                     type: string
                     description: Message de confirmation de la modification.
         "404":
-          description: Prélèvement trouvé
+          description: Prélèvement non trouvé
           content:
             application/json:
               schema:
@@ -223,7 +234,74 @@ paths:
                   message:
                     type: string
                     description: Message d'erreur indiquant que le prélèvement n'a pas été trouvé.
+  /user/{userId}/{accountId}/payments?month={month}:
+     get:
+      tags:
+          - Accounts and payments
+      summary: Récupere les payments d'un mois pécis seulement
+      description: Permet à l'utilisateur identifié par {userId} de modifier le détail (catégorie et note) au format texte d'un prélèvement spécifique identifié par {paymentId}. Les détails mis à jour sont fournis dans le corps de la requête.
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: integer
+          description: L'identifiant de l'utilisateur.
+        - in: path
+          name: accountId
+          required: true
+          schema:
+            type: integer
+          description: L'identifiant du compte.
+        - in: header
+          name: token
+          required: true
+          schema:
+            type: string
+          description: Le token d'authentification de l'utilisateur.
+        - in: query
+          name: month
+          schema:
+            type: string
+          description: The month for which to retrieve payment details.
 
+      responses:
+        "200":
+          schema:
+            $ref: "#/definitions/PaymentResponse"
+          examples:
+            application/json:
+              Payments:
+                - AccountId: "12345"
+                  PaymentId: "896544112552"
+                  PaymentValue: "65"
+                  PaymentCategory: "Category"
+                  PaymentNote: "Note"
+                - AccountId: "12345"
+                  PaymentId: "8965472552"
+                  PaymentValue: "20"
+                  PaymentCategory: "Category"
+                  PaymentNote: "Note"
+                
+          description: Réponse réussie
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Message de confirmation de la modification.
+        "404":
+          description: Prélèvement non trouvé
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Message d'erreur indiquant que le prélèvement n'a pas été trouvé.
 components:
   schemas:
     ChangeDetailsBody:

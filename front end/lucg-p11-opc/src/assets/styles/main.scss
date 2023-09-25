@@ -301,6 +301,7 @@ body {
 .editnamebuttoncontainer {
   display: flex;
   flex-direction: row;
+  justify-content: center;
 }
 .singinbody {
   height: 80vh;
@@ -314,6 +315,7 @@ body {
 .paddingtop20px {
   padding-top: 20px;
 }
+
 @media (min-width: 920px) {
   .hero {
     height: 400px;

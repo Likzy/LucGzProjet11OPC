@@ -104,15 +104,15 @@ function User() {
                       onChange={(e) => setNewUsername(e.target.value)}
                     />
                   </div>
+                  <div className="editnamebuttoncontainer">
+                    <button className="editnamebutton" type="submit">
+                      Save
+                    </button>
+                    <button className="editnamebutton" onClick={closeEditname}>
+                      Cancel
+                    </button>
+                  </div>
                 </form>
-                <div className="editnamebuttoncontainer">
-                  <button className="editnamebutton" type="submit">
-                    Save
-                  </button>
-                  <button className="editnamebutton" onClick={closeEditname}>
-                    Cancel
-                  </button>
-                </div>
               </div>
             </div>
           </div>
